@@ -1,0 +1,59 @@
+{
+	"Movies": [
+		{
+			"Id": "",
+			"Title": "Candyman",
+			"Genre": "Horror",
+			"Description": "an artist begins to explore the macabre history of Candyman, not knowing it would unravel his sanity and unleash a terrifying wave of violence that puts him on a collision course with destiny.",
+			"Actors": [
+				"Tony Todd",
+				"Yahya Abdul",
+				"Teyonah Parris"
+			],
+			"Rating": 10,
+			"Director": "Nia DaCosta"
+		},
+		
+	
+	{
+		"Id": "",
+		"Title": "The Conjuring: The Devil Made Me Do It",
+		"Genre": "Horror",
+		"Description": "Paranormal investigators Ed and Lorraine Warren take on one of the most sensational cases of their careers",
+		"Actors": [
+			"Vera Farmiga",
+			"Patrick Wilson",
+			"Sarah Catherine"
+		],
+		"Rating": 10,
+		"Director": "Michael Chaves"
+	},
+	{
+		"Id": "",
+		"Title": "Midsommar",
+		"Genre": "Horror",
+		"Description": "A couple travel to Sweden to visit their friend's rural hometown for its fabled midsummer festival",
+		"Actors": [
+			"Florence Pugh",
+			"Will Poutler",
+			"Jack Reynor"
+		],
+		"Rating": 10,
+		"Director": "Ari Aster"
+	},
+	{
+		"Id": "",
+		"Title": "Ma",
+		"Genre": "Thriller",
+		"Description": "A lonely middle-aged woman befriends some teenagers and decides to let them party in the basement of her home.",
+		"Actors": [
+			"Octavia Spencer",
+			"Diana Silvers",
+			"Luke Evans"
+		],
+		"Rating": 10,
+		"Director": "Tate Taylor"
+	}
+	
+	]
+}
