@@ -2,14 +2,20 @@ package service
 
 import (
 	"errors"
-	repository "movieproj/Repository"
+	"movieproj/Repository"
 	"movieproj/entities"
 
 	"github.com/google/uuid"
 )
 
 type Service struct {
-	Repo repository.Repo
+	Repo Repository.Repo
+}
+
+func NewService(r Repository.Repo) Service {
+	return Service{
+		Repo: r,
+	}
 }
 
 func (s Service) CreateNewMovie(mv entities.Movies) error {
@@ -33,3 +39,20 @@ func (s Service) getMovies(Id string) (entities.Movies, error) {
 	}
 	return movie, nil
 }
+
+func (s Service) FindById(id string) (entities.Movies, error) {
+	movie, err := s.Repo.FindById(id)
+	if err != nil {
+		return movie, nil
+	}
+	return movie, nil
+}
+
+func (s Service) DeleteMovie(id string) (entities.Movies, error) {
+	movie, err := s.Repo.FindById(id)
+	if err != nil {
+		return movie, nil
+	}
+	return movie, nil
+}
+
