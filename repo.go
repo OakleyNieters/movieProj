@@ -1,7 +1,8 @@
-package repository
+package Repository
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"movieproj/entities"
 )
@@ -45,33 +46,65 @@ func (r Repo) CreateNewMovie(mv entities.Movies) error {
 	return nil
 }
 
-func getMovies() (Repo, error) {
-	file, _ := ioutil.ReadFile("moviesdb.json")
-	data := Repo{}
-	error := json.Unmarshal([]byte(file), &data)
-	if error != nil {
-		panic(error)
-	}
-	return data, error
-}
-
-func (r Repo) getMovies(id string) (entities.Movies, error){
+func (r Repo) FindById(id string) (entities.Movies, error) {
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
 	}
-	
-	movies := DataBase{
-		err = json.Unmarshal(file, movies)
+	movies := movieStruct{}
+	err = json.Unmarshal(file, &movies)
+	if err != nil {
 
-		match := entities.Movies{}
-
-		for _, v := range movies.Movies {
-			if v.Id == id {
-				match = val
-				return match, nil
-			}
-		}
-		return entities.Movie{}, errors.New("not found")
+		fmt.Println(err)
 	}
+
+	moviedb := entities.Movies{}
+
+	for _, movie := range movies.Movie {
+		if movie.ID == id {
+			moviedb = movie
+			return moviedb, nil
+		}
+	}
+	return moviedb, nil
+
 }
+
+func (r Repo) GetMovies() (movieStruct, error) {
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	movies := movieStruct{}
+	err = json.Unmarshal(file, &movies)
+	if err != nil {
+		return movies, err
+	}
+	return movies, nil
+}
+
+func (r Repo) DeleteMovie(id string) (entities.Movies, error) {
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+	movies := movieStruct{}
+	err = json.Unmarshal(file, &movies)
+	if err != nil {
+
+		fmt.Println(err)
+	}
+
+	moviedb := entities.Movies{}
+
+	for index, movie := range movies.Movie {
+		if movie.ID == id {
+			movies.Movie = append(movies.Movie[:index], movies.Movie[index+1:]...)
+			return moviedb, nil
+		}
+	}
+	return moviedb, nil
+
+}
+
