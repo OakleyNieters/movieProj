@@ -3,7 +3,7 @@
 		{
 			"Id": "05735c07-717c-4fba-a0ef-0889f76c26a5"",
 			"Title": "Candyman",
-			"Genre": "Horror",
+			"Genre": ["Horror", "Thriller"],
 			"Description": "an artist begins to explore the macabre history of Candyman, not knowing it would unravel his sanity and unleash a terrifying wave of violence that puts him on a collision course with destiny.",
 			"Actors": [
 				"Tony Todd",
@@ -18,7 +18,7 @@
 	{
 		"Id": "",
 		"Title": "The Conjuring: The Devil Made Me Do It",
-		"Genre": "Horror",
+		"Genre": ["Horror", "Thriller"],
 		"Description": "Paranormal investigators Ed and Lorraine Warren take on one of the most sensational cases of their careers",
 		"Actors": [
 			"Vera Farmiga",
@@ -31,7 +31,7 @@
 	{
 		"Id": "",
 		"Title": "Midsommar",
-		"Genre": "Horror",
+		"Genre": ["Horror", "Thriller"],
 		"Description": "A couple travel to Sweden to visit their friend's rural hometown for its fabled midsummer festival",
 		"Actors": [
 			"Florence Pugh",
@@ -44,7 +44,7 @@
 	{
 		"Id": "",
 		"Title": "Ma",
-		"Genre": "Thriller",
+		"Genre": ["Horror", "Thriller"],
 		"Description": "A lonely middle-aged woman befriends some teenagers and decides to let them party in the basement of her home.",
 		"Actors": [
 			"Octavia Spencer",
