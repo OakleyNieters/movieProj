@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"movieproj/entities"
 	"movieproj/service"
 	"net/http"
@@ -24,32 +25,33 @@ func (mh MovieHandler) PostNewMovie(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&mv)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println(err)
 	}
 
-	err = mh.Svc.CreateNewMovie(mv)
+	err = mh.Svc.AddMovie(mv)
 	if err != nil {
 		switch err.Error() {
-		case "invalid movie":
+		case "movie already exists":
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		case "movie does not exist":
-			http.Error(w, err.Error(), http.StatusNotFound)
-
+		case "invalid rating":
+			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (mh MovieHandler) GetMovieHandler(w http.ResponseWriter, r *http.Request) {
+func (mh MovieHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["Id"]
+	id := vars["ID"]
 
-	mvID, err := mh.Svc.FindById(id)
+	mvID, err := mh.Svc.GetMovieById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		switch err.Error() {
+		case "movie not found":
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
 	}
 
 	movie, err := json.MarshalIndent(mvID, "", " ")
@@ -58,26 +60,22 @@ func (mh MovieHandler) GetMovieHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted)
-	w.Write(movie)
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(movie)
 }
 
-func (mh MovieHandler) DeleteMovieHandler(w http.ResponseWriter, r *http.Request) {
+func (mov MovieHandler) DeleteMovieById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["Id"]
+	id := vars["ID"]
 
-	mvID, err := mh.Svc.FindById(id)
+	err := mov.Svc.Repo.DeleteMovieById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
-	}
-
-	movie, err := json.MarshalIndent(mvID, "", " ")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		switch err.Error() {
+		case "failed to delete movie - does not exist":
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted)
-	w.Write(movie)
-	json.NewEncoder(w).Encode(movie)
+	w.WriteHeader(http.StatusOK)
 }
