@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	fileName := "/Users/oakleynieters/Downloads/MovieProj/moviedb.json"
+	fileName := "/Users/oakleynieters/Downloads/movieproj/moviedb.json"
 
 	ext := filepath.Ext(fileName)
 	if ext != ".json" {
@@ -21,7 +21,7 @@ func main() {
 	}
 	r := Repository.NewRepository(fileName)
 
-	svc := service.Service(r)
+	svc := service.NewService(r)
 
 	hdlr := handler.NewMovieHandler(svc)
 
