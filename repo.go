@@ -2,13 +2,14 @@ package Repository
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"movieproj/entities"
 )
 
 type movieStruct struct {
-	Movie []entities.Movies
+	Movies []entities.Movies
 }
 
 type Repo struct {
@@ -28,13 +29,19 @@ func (r Repo) CreateNewMovie(mv entities.Movies) error {
 	if err != nil {
 		return err
 	}
-	err = json.Unmarshal(bs, ms)
+	err = json.Unmarshal(bs, &ms)
 	if err != nil {
 		return err
 	}
-	ms.Movie = append(ms.Movie, mv)
+	for _, val := range ms.Movies {
+		if val.Title == mv.Title {
+			return errors.New("movie already exists")
+		}
+	}
 
-	byteSlice, err := json.Marshal(ms)
+	ms.Movies = append(ms.Movies, mv)
+
+	byteSlice, err := json.MarshalIndent(ms, "", " ")
 	if err != nil {
 		return err
 	}
@@ -46,65 +53,60 @@ func (r Repo) CreateNewMovie(mv entities.Movies) error {
 	return nil
 }
 
-func (r Repo) FindById(id string) (entities.Movies, error) {
+func (r *Repo) GetMovieById(id string) (entities.Movies, error) {
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
 		fmt.Println(err)
 	}
 	movies := movieStruct{}
 	err = json.Unmarshal(file, &movies)
-	if err != nil {
 
-		fmt.Println(err)
-	}
+	compare := entities.Movies{}
 
-	moviedb := entities.Movies{}
+	for _, val := range movies.Movies {
+		if val.ID == id {
+			compare = val
+			return compare, nil
 
-	for _, movie := range movies.Movie {
-		if movie.ID == id {
-			moviedb = movie
-			return moviedb, nil
 		}
-	}
-	return moviedb, nil
 
+	}
+	return compare, nil
 }
 
-func (r Repo) GetMovies() (movieStruct, error) {
+func (r *Repo) DeleteMovieById(id string) error {
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	movies := movieStruct{}
+	newDb := movieStruct{}
 	err = json.Unmarshal(file, &movies)
-	if err != nil {
-		return movies, err
-	}
-	return movies, nil
-}
 
-func (r Repo) DeleteMovie(id string) (entities.Movies, error) {
-	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil {
-		fmt.Println(err)
-	}
-	movies := movieStruct{}
-	err = json.Unmarshal(file, &movies)
-	if err != nil {
-
-		fmt.Println(err)
-	}
-
-	moviedb := entities.Movies{}
-
-	for index, movie := range movies.Movie {
-		if movie.ID == id {
-			movies.Movie = append(movies.Movie[:index], movies.Movie[index+1:]...)
-			return moviedb, nil
+	dbLen := len(movies.Movies)
+	for _, val := range movies.Movies {
+		if val.ID == id {
+			continue
+		} else {
+			newDb.Movies = append(newDb.Movies, val)
 		}
 	}
-	return moviedb, nil
 
+	if len(newDb.Movies) == dbLen {
+		return errors.New("failed to delete movie - does not exist")
+	}
+
+	movieBytes, err := json.MarshalIndent(newDb, "", "	")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(r.Filename, movieBytes, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
