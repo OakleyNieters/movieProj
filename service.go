@@ -1,9 +1,8 @@
 package service
 
 import (
-	"errors"
-	"movieproj/Repository"
 	"movieproj/entities"
+	Repository "movieproj/repository"
 
 	"github.com/google/uuid"
 )
@@ -17,42 +16,30 @@ func NewService(r Repository.Repo) Service {
 		Repo: r,
 	}
 }
+func (s Service) AddMovie(m entities.Movies) error {
+	m.ID = uuid.New().String()
 
-func (s Service) CreateNewMovie(mv entities.Movies) error {
-
-	mv.ID = uuid.New().String()
-
-	if mv.Rating <= 10 && mv.Rating >= 0 {
-		err := s.Repo.CreateNewMovie(mv)
-		if err != nil {
-			return err
-		}
-		return nil
+	err := s.Repo.CreateNewMovie(m)
+	if err != nil {
+		return err
 	}
-	return errors.New("invalid Rating")
+	return nil
 }
 
-func (s Service) getMovies(Id string) (entities.Movies, error) {
-	movie, err := s.getMovies(Id)
+func (s Service) GetMovieById(id string) (entities.Movies, error) {
+	movie, err := s.Repo.GetMovieById(id)
 	if err != nil {
 		return movie, err
 	}
 	return movie, nil
 }
 
-func (s Service) FindById(id string) (entities.Movies, error) {
-	movie, err := s.Repo.FindById(id)
+func (s Service) DeleteMovie(id string) error {
+	err := s.DeleteMovie(id)
 	if err != nil {
-		return movie, nil
+		return err
 	}
-	return movie, nil
+	return nil
 }
 
-func (s Service) DeleteMovie(id string) (entities.Movies, error) {
-	movie, err := s.Repo.FindById(id)
-	if err != nil {
-		return movie, nil
-	}
-	return movie, nil
-}
 
