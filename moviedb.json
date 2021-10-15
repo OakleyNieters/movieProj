@@ -1,0 +1,66 @@
+[
+ {
+  "ID": "dbc530ef-6942-4831-973d-ca30f034836b",
+  "Title": "Ma",
+  "Genre": [
+   "Horror",
+   "Thriller"
+  ],
+  "Description": "A lonely middle-aged woman befriends some teenagers and decides to let them party in the basement of her home.",
+  "Director": "Tate Taylor",
+  "Actors": [
+   "Octavia Spencer",
+   "Diana Silvers",
+   "Luke Evans"
+  ],
+  "Rating": 10
+ },
+ {
+  "ID": "8a613bc7-341d-430d-9b83-284656d5b922",
+  "Title": "Midsommar",
+  "Genre": [
+   "Horror",
+   "Thriller"
+  ],
+  "Description": "A couple travel to Sweden to visit their friend's rural hometown for its fabled midsummer festival",
+  "Director": "Ari Aster",
+  "Actors": [
+   "Florence Pugh",
+   "Will Poutler",
+   "Jack Reynor"
+  ],
+  "Rating": 10
+ },
+ {
+  "ID": "6ad156c6-449c-4e7b-aecb-facd1d02bc87",
+  "Title": "Candyman",
+  "Genre": [
+   "Horror",
+   "Thriller"
+  ],
+  "Description": "an artist begins to explore the macabre history of Candyman, not knowing it would unravel his sanity and unleash a terrifying wave of violence that puts him on a collision course with destiny.",
+  "Director": "Nia DaCosta",
+  "Actors": [
+   "Tony Todd",
+   "Yahya Abdul",
+   "Teyonah Parris"
+  ],
+  "Rating": 10
+ },
+ {
+  "ID": "6ad156c6-449c-4e7b-aecb-facd1d02bc87",
+  "Title": "Candyman Can",
+  "Genre": [
+   "Horror",
+   "Thriller"
+  ],
+  "Description": "an artist begins to explore the macabre history of Candyman, not knowing it would unravel his sanity and unleash a terrifying wave of violence that puts him on a collision course with destiny.",
+  "Director": "Nia DaCosta",
+  "Actors": [
+   "Tony Todd",
+   "Yahya Abdul",
+   "Teyonah Parris"
+  ],
+  "Rating": 10
+ }
+]
